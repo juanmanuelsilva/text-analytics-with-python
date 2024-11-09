@@ -63,7 +63,28 @@ def display_confusion_matrix(true_labels, predicted_labels, classes=[1,0]):
                             index=pd.MultiIndex(levels=[['Actual:'], classes], 
                                                 labels=level_labels)) 
     print(cm_frame) 
+'''
+# PROPOSAL: error "MultiIndex.__new__() got an unexpected keyword argument 'labels'" 
+# when use display_confusion_matrix on Ch09a - Sentiment Analysis - Unsupervised Lexical.ipynb
 
+def display_confusion_matrix(true_labels, predicted_labels, classes=[1, 0]):
+    total_classes = len(classes)
+
+    cm = metrics.confusion_matrix(y_true=true_labels, y_pred=predicted_labels, labels=classes)
+    
+    # Creación del MultiIndex para las columnas
+    column_index = pd.MultiIndex.from_product([['Predicted:'], classes],
+                                            names=['Level_0', 'Level_1'])
+
+    # Creación del MultiIndex para los índices
+    row_index = pd.MultiIndex.from_product([['Actual:'], classes],
+                                          names=['Level_0', 'Level_1'])
+
+    cm_frame = pd.DataFrame(data=cm,
+                            columns=column_index,
+                            index=row_index)
+    print(cm_frame)
+'''
 
 def display_confusion_matrix_pretty(true_labels, predicted_labels, classes=[1,0]):
     
